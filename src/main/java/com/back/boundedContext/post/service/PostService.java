@@ -1,8 +1,8 @@
-package com.back.service;
+package com.back.boundedContext.post.service;
 
-import com.back.entity.Member;
-import com.back.entity.Post;
-import com.back.repository.PostRepository;
+import com.back.boundedContext.member.entity.Member;
+import com.back.boundedContext.post.entity.Post;
+import com.back.boundedContext.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +19,8 @@ public class PostService {
 
     public Post write(Member author, String title, String content) {
         Post post = new Post(author, title, content);
+
+        author.increaseActivityScore(3);
 
         return postRepository.save(post);
     }

@@ -1,7 +1,8 @@
-package com.back.entity;
+package com.back.boundedContext.post.entity;
 
 
-import com.back.jpa.entity.BaseIdAndTime;
+import com.back.boundedContext.member.entity.Member;
+import com.back.boundedContext.global.jpa.entity.BaseIdAndTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -32,15 +33,17 @@ public class Post extends BaseIdAndTime {
         this.content = content;
     }
 
+    public boolean hasComments() {
+        return !comments.isEmpty();
+    }
+
     public PostComment addComment(Member author, String content) {
         PostComment postComment = new PostComment(this, author, content);
 
         comments.add(postComment);
 
-        return postComment;
-    }
+        author.increaseActivityScore(1);
 
-    public boolean hasComments() {
-        return !comments.isEmpty();
+        return postComment;
     }
 }
