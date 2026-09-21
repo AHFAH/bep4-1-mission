@@ -24,6 +24,7 @@ public class PostFacade {
         return postSyncMemberUseCase.syncMember(member);
     }
 
+    @Transactional(readOnly = true)
     public long count() {
         return postSupport.count();
     }
